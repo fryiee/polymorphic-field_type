@@ -19,12 +19,12 @@ class PolymorphicFieldType extends FieldTypeAbstract
      */
     public function onAssigned($assignment)
     {
-        $table = $assignment->getStream()->tableName();
+        $table = $assignment->stream->entryTable();
 
         \Schema::table(
             $table,
             function ($table) use ($assignment) {
-                $table->string($assignment->field->slug . '_string')->nullable();
+                $table->string($assignment->field->slug . '_type')->nullable();
                 $table->integer($assignment->field->slug . '_id')->nullable();
             }
         );
