@@ -4,6 +4,8 @@ use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeAddon;
 
 class PolymorphicFieldType extends FieldTypeAddon
 {
+    protected $slug = 'polymorphic';
+
     /**
      * The database column type this field type uses.
      * This column uses a couple custom columns.
