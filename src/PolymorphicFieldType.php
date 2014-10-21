@@ -1,4 +1,4 @@
-<?php namespace Streams\Addon\FieldType\Polymorphic;
+<?php namespace Anomaly\Streams\FieldType\Polymorphic;
 
 use Streams\Core\Addon\FieldTypeAbstract;
 
