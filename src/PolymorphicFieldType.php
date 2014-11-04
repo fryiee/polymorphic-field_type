@@ -1,8 +1,8 @@
 <?php namespace Anomaly\Streams\Addon\FieldType\Polymorphic;
 
-use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeAddon;
+use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 
-class PolymorphicFieldType extends FieldTypeAddon
+class PolymorphicFieldType extends FieldType
 {
     public function onAssigned($assignment)
     {
