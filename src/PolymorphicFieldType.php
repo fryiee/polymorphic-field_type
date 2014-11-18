@@ -4,7 +4,7 @@ use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 
 class PolymorphicFieldType extends FieldType
 {
-    public function onAssigned($assignment)
+    /*public function onAssigned($assignment)
     {
         $table = $assignment->stream->entryTable();
 
@@ -15,5 +15,5 @@ class PolymorphicFieldType extends FieldType
                 $table->integer($assignment->field->slug . '_id')->nullable();
             }
         );
-    }
+    }*/
 }
