@@ -1,4 +1,4 @@
-<?php namespace Anomaly\Streams\Addon\FieldType\Polymorphic;
+<?php namespace Anomaly\PolymorphicFieldType;
 
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 
