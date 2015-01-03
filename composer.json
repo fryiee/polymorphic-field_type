@@ -1,5 +1,5 @@
 {
-    "name": "anomaly/polymorphic-field-type",
+    "name": "anomaly/polymorphic-field_type",
     "type": "streams-addon",
     "description": "Polymorphic field type.",
     "authors": [
