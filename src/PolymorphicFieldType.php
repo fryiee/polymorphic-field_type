@@ -4,6 +4,7 @@ use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 
 class PolymorphicFieldType extends FieldType
 {
+
     /*public function onAssigned($assignment)
     {
         $table = $assignment->stream->entryTable();
