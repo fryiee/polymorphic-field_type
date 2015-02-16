@@ -2,5 +2,5 @@
 
 return [
     'name'        => 'Polymorphic',
-    'description' => 'Polymorphic field type.',
+    'description' => 'A polymorphic relation field type.'
 ];

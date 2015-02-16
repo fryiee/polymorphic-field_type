@@ -1,20 +1,35 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
+use Anomaly\Streams\Platform\Entry\EntryModel;
 
 class PolymorphicFieldType extends FieldType
 {
 
-    /*public function onAssigned($assignment)
+    /**
+     * Get the relation.
+     *
+     * @param EntryModel $model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|mixed|null
+     */
+    public function getRelation(EntryModel $model)
     {
-        $table = $assignment->stream->entryTable();
+        return $model->morphTo(array_get($this->config, 'related'), 'id', $this->getColumnName());
+    }
 
-        \Schema::table(
-            $table,
-            function ($table) use ($assignment) {
-                $table->string($assignment->field->slug . '_type')->nullable();
-                $table->integer($assignment->field->slug . '_id')->nullable();
-            }
-        );
-    }*/
+    /**
+     * Get the related model.
+     *
+     * @return null
+     */
+    protected function getRelatedModel()
+    {
+        $model = array_get($this->config, 'related');
+
+        if (!$model) {
+            return null;
+        }
+
+        return app()->make($model);
+    }
 }
