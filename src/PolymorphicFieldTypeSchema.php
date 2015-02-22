@@ -44,10 +44,9 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
     /**
      * Drop the field type column.
      *
-     * @param Blueprint           $table
-     * @param AssignmentInterface $assignment
+     * @param Blueprint $table
      */
-    public function dropColumn(Blueprint $table, AssignmentInterface $assignment)
+    public function dropColumn(Blueprint $table)
     {
         $table->dropColumn($this->fieldType->getColumnName() . '_id');
         $table->dropColumn($this->fieldType->getColumnName() . '_type');
