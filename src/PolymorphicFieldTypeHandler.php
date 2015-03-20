@@ -22,7 +22,7 @@ class PolymorphicFieldTypeHandler extends FieldTypeHandler
      * Set the value.
      *
      * @param EloquentModel $entry
-     * @param                $value
+     * @param $value
      * @return array|void
      */
     public function set(EloquentModel $entry, $value)
@@ -32,19 +32,13 @@ class PolymorphicFieldTypeHandler extends FieldTypeHandler
 
         app()->call(
             array_get($config, 'set_handler', __NAMESPACE__ . '\PolymorphicFieldTypeEntryHandler@set'),
-            compact('entry', 'fieldType', 'config')
+            compact('entry', 'value', 'fieldType', 'config')
         );
     }
 
-/*    public function get(EloquentModel $entry)
+    public function get(EloquentModel $entry)
     {
-        $fieldType = $this->fieldType;
-        $config = $this->fieldType->getConfig();
-
-        app()->call(
-            array_get($config, 'get_handler', __NAMESPACE__ . '\PolymorphicFieldTypeEntryHandler@get'),
-            compact('entry', 'fieldType', 'config')
-        );
-    }*/
+        return $this->fieldType->getRelation($entry);
+    }
 
 }

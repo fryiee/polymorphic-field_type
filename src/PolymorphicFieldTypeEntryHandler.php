@@ -1,6 +1,7 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
+use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class PolymorphicFieldTypeEntryHandler
      * @param PolymorphicFieldType $fieldType
      * @param array $config
      */
-    public function set(Request $request, EntryInterface $entry, PolymorphicFieldType $fieldType, array $config)
+    public function set(Request $request, EntryInterface $entry, $value, PolymorphicFieldType $fieldType, array $config)
     {
         $relatedType = $request->get("{$fieldType->getField()}_type");
         $relatedId = $request->get("{$fieldType->getField()}_id");
@@ -33,7 +34,7 @@ class PolymorphicFieldTypeEntryHandler
         }
     }
 
-    public function get(EntryInterface $entry, PolymorphicFieldType $fieldType, array $config)
+    public function get(EloquentModel $entry, PolymorphicFieldType $fieldType, array $config)
     {
         return $entry->getRelation($fieldType->getField())->getResults();
     }
