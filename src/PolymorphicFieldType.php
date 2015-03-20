@@ -1,7 +1,8 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
+use Anomaly\Streams\Platform\Addon\FieldType\Contract\RelationFieldTypeInterface;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
-use Anomaly\Streams\Platform\Entry\EntryModel;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 
 /**
  * Class PolymorphicFieldType
@@ -11,33 +12,48 @@ use Anomaly\Streams\Platform\Entry\EntryModel;
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\PolymorphicFieldType
  */
-class PolymorphicFieldType extends FieldType
+class PolymorphicFieldType extends FieldType implements RelationFieldTypeInterface
 {
+
+    /**
+     * @var string
+     */
+    protected $inputView = 'anomaly.field_type.polymorphic::input';
 
     /**
      * Get the relation.
      *
-     * @param EntryModel $model
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne|mixed|null
+     * @param EntryInterface $model
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo|mixed|null
      */
-    public function getRelation(EntryModel $model)
+    public function getRelation(EntryInterface $model)
     {
-        return $model->morphTo(array_get($this->config, 'related'), 'id', $this->getColumnName());
+        return $model->morphTo($this->getField());
     }
 
     /**
-     * Get the related model.
-     *
-     * @return null
+     * @return mixed
      */
-    protected function getRelatedModel()
+    public function getUrl()
     {
-        $model = array_get($this->config, 'related');
+        $config = $this->getConfig();
 
-        if (!$model) {
-            return null;
-        }
+        $default = route('anomaly.field_type.polymorphic.search', [
+            'by'      => array_get($config, 'search_field', 'title'),
+            'limit'   => array_get($config, 'limit', 25),
+            'related' => $this->encodeType(array_get($config, 'related')),
+        ]);
 
-        return app()->make($model);
+        $url = array_get($config, 'url', $default);
+
+        $url = str_contains($url, '?') ? $url . '&' : $url . '?';
+
+        return $url . 'q={query}';
     }
+
+    protected function encodeType($type)
+    {
+        return str_replace('\\', '.', $type);
+    }
+
 }
