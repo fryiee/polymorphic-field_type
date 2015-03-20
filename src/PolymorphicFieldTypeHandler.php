@@ -1,13 +1,14 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
-use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeHandler;
+use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeAccessor;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 
 /**
- * Class PolymorphicFieldTypeHandler
+ * Class PolymorphicFieldTypeAccessor
+ *
  * @package Anomaly\PolymorphicFieldType
  */
-class PolymorphicFieldTypeHandler extends FieldTypeHandler
+class PolymorphicFieldTypeAccessor extends FieldTypeAccessor
 {
 
     /**
@@ -22,13 +23,13 @@ class PolymorphicFieldTypeHandler extends FieldTypeHandler
      * Set the value.
      *
      * @param EloquentModel $entry
-     * @param $value
+     * @param               $value
      * @return array|void
      */
     public function set(EloquentModel $entry, $value)
     {
         $fieldType = $this->fieldType;
-        $config = $this->fieldType->getConfig();
+        $config    = $this->fieldType->getConfig();
 
         app()->call(
             array_get($config, 'set_handler', __NAMESPACE__ . '\PolymorphicFieldTypeEntryHandler@set'),
@@ -40,5 +41,4 @@ class PolymorphicFieldTypeHandler extends FieldTypeHandler
     {
         return $this->fieldType->getRelation($entry);
     }
-
 }
