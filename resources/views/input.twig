@@ -1,0 +1,36 @@
+<div class="ui fluid search {{ field_type.getInputName() }}">
+
+    <input
+            class="prompt"
+            type="text"
+            name="{{ field_type.getInputName() }}"
+            value="{{ field_type.value }}"
+            placeholder="{{ trans(field_type.placeholder) }}"
+            >
+
+    <input type="hidden" name="{{ field_type.getField()~'_id' }}"/>
+    <input type="hidden" name="{{ field_type.getField()~'_type' }}"/>
+    <div class="results"></div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        var fieldName = '{{ field_type.getInputName() }}';
+        var field = $('.ui.search.' + fieldName);
+        var inputId = field.find('input[name="' + fieldName + '_id"]');
+        var inputType = field.find('input[name="' + fieldName + '_type"]');
+        var url = '{{ field_type.getUrl()|raw }}';
+
+        var callback = function (result) {
+            inputId.val(result.id);
+            inputType.val(result.type);
+        };
+        
+        field.search({
+            apiSettings: {url: url},
+            onSelect: {{ field_type.config.callback|default('callback')|raw }}
+        });
+    });
+</script>
