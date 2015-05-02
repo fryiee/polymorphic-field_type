@@ -1,7 +1,7 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
-use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Class PolymorphicFieldType
@@ -22,12 +22,11 @@ class PolymorphicFieldType extends FieldType
     /**
      * Get the relation.
      *
-     * @param EntryInterface $model
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo|mixed|null
+     * @return MorphTo|mixed|null
      */
-    public function getRelation(EntryInterface $model)
+    public function getRelation()
     {
-        return $model->morphTo($this->getField());
+        return $this->entry->morphTo($this->getField());
     }
 
     /**
@@ -37,11 +36,14 @@ class PolymorphicFieldType extends FieldType
     {
         $config = $this->getConfig();
 
-        $default = route('anomaly.field_type.polymorphic.search', [
-            'by'      => array_get($config, 'search_field', 'title'),
-            'limit'   => array_get($config, 'limit', 25),
-            'related' => $this->encodeType(array_get($config, 'related')),
-        ]);
+        $default = route(
+            'anomaly.field_type.polymorphic.search',
+            [
+                'by'      => array_get($config, 'search_field', 'title'),
+                'limit'   => array_get($config, 'limit', 25),
+                'related' => $this->encodeType(array_get($config, 'related')),
+            ]
+        );
 
         $url = array_get($config, 'url', $default);
 
@@ -54,5 +56,4 @@ class PolymorphicFieldType extends FieldType
     {
         return str_replace('\\', '.', $type);
     }
-
 }

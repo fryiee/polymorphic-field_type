@@ -26,7 +26,7 @@ class PolymorphicFieldTypeAccessor extends FieldTypeAccessor
      * @param               $value
      * @return array|void
      */
-    public function set(EloquentModel $entry, $value)
+    public function set($value)
     {
         $fieldType = $this->fieldType;
         $config    = $this->fieldType->getConfig();
@@ -37,8 +37,8 @@ class PolymorphicFieldTypeAccessor extends FieldTypeAccessor
         );
     }
 
-    public function get(EloquentModel $entry)
+    public function get()
     {
-        return $this->fieldType->getRelation($entry);
+        return $this->fieldType->getRelation();
     }
 }
