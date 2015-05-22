@@ -4,7 +4,7 @@
 
 #### A polymorphic relation field type.
 
-The polymorphic field type a clean API to establish polymorphic relations between objets.
+The polymorphic field type a clean API to establish polymorphic relations between objects.
 
 ## Configuration
 
