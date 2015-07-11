@@ -28,19 +28,19 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
             return;
         }
 
-        $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
-            !$assignment->isRequired()
-        );
-
         $table->string($this->fieldType->getColumnName() . '_type')->nullable(
             !$assignment->isRequired()
         );
 
-        if ($assignment->isUnique()) {
+        $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
+            !$assignment->isRequired()
+        );
+
+        if ($assignment->isUnique() && $assignment->isTranslatable()) {
             $table->unique(
                 [
-                    $this->fieldType->getColumnName() . '_id',
-                    $this->fieldType->getColumnName() . '_type'
+                    $this->fieldType->getColumnName() . '_type',
+                    $this->fieldType->getColumnName() . '_id'
                 ]
             );
         }
@@ -53,7 +53,7 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
      */
     public function dropColumn(Blueprint $table)
     {
-        $table->dropColumn($this->fieldType->getColumnName() . '_id');
         $table->dropColumn($this->fieldType->getColumnName() . '_type');
+        $table->dropColumn($this->fieldType->getColumnName() . '_id');
     }
 }
