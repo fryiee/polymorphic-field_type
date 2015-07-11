@@ -15,6 +15,8 @@ class PolymorphicFieldType extends FieldType
 {
 
     /**
+     * The input view.
+     *
      * @var string
      */
     protected $inputView = 'anomaly.field_type.polymorphic::input';
@@ -27,33 +29,5 @@ class PolymorphicFieldType extends FieldType
     public function getRelation()
     {
         return $this->entry->morphTo($this->getField());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        $config = $this->getConfig();
-
-        $default = route(
-            'anomaly.field_type.polymorphic.search',
-            [
-                'by'      => array_get($config, 'search_field', 'title'),
-                'limit'   => array_get($config, 'limit', 25),
-                'related' => $this->encodeType(array_get($config, 'related')),
-            ]
-        );
-
-        $url = array_get($config, 'url', $default);
-
-        $url = str_contains($url, '?') ? $url . '&' : $url . '?';
-
-        return $url . 'q={query}';
-    }
-
-    protected function encodeType($type)
-    {
-        return str_replace('\\', '.', $type);
     }
 }
