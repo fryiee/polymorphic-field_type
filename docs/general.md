@@ -1,7 +1,6 @@
 # Polymorphic Field Type
 
 - [Introduction](#introduction)
-- [Configuration](#configuration)
 - [Output](#output)
 
 
