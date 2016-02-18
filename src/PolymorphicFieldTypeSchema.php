@@ -1,5 +1,6 @@
 <?php namespace Anomaly\PolymorphicFieldType;
 
+use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeSchema;
 use Anomaly\Streams\Platform\Assignment\Contract\AssignmentInterface;
 use Illuminate\Database\Schema\Blueprint;
@@ -44,6 +45,18 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
                 ]
             );
         }
+    }
+
+    /**
+     * Rename the column.
+     *
+     * @param Blueprint $table
+     * @param FieldType $from
+     */
+    public function renameColumn(Blueprint $table, FieldType $from)
+    {
+        $table->renameColumn($from->getColumnName() . '_type', $this->fieldType->getColumnName() . '_type');
+        $table->renameColumn($from->getColumnName() . '_id', $this->fieldType->getColumnName() . '_id');
     }
 
     /**

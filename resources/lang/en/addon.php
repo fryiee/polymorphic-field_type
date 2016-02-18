@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'name'        => 'Polymorphic',
+    'title'       => 'Polymorphic',
+    'name'        => 'Polymorphic Field Type',
     'description' => 'A polymorphic relation field type.'
 ];
