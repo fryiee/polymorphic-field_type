@@ -11,7 +11,6 @@ use Illuminate\Database\Schema\Blueprint;
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
- * @package       Anomaly\PolymorphicFieldType
  */
 class PolymorphicFieldTypeSchema extends FieldTypeSchema
 {
@@ -41,7 +40,7 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
             $table->unique(
                 [
                     $this->fieldType->getColumnName() . '_type',
-                    $this->fieldType->getColumnName() . '_id'
+                    $this->fieldType->getColumnName() . '_id',
                 ]
             );
         }
