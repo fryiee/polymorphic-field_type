@@ -16,7 +16,7 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
 {
 
     /**
-     * Add the field type column.
+     * Add the field type columns.
      *
      * @param Blueprint           $table
      * @param AssignmentInterface $assignment
@@ -35,6 +35,37 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
         $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
             !$assignment->isRequired()
         );
+
+        if ($assignment->isUnique() && $assignment->isTranslatable()) {
+            $table->unique(
+                [
+                    $this->fieldType->getColumnName() . '_type',
+                    $this->fieldType->getColumnName() . '_id',
+                ]
+            );
+        }
+    }
+
+    /**
+     * Update the field type columns.
+     *
+     * @param Blueprint           $table
+     * @param AssignmentInterface $assignment
+     */
+    public function updateColumn(Blueprint $table, AssignmentInterface $assignment)
+    {
+        // Skip if the column exists.
+        if (!$this->schema->hasColumn($table->getTable(), $this->fieldType->getColumnName() . '_id')) {
+            return;
+        }
+
+        $table->string($this->fieldType->getColumnName() . '_type')->nullable(
+            !$assignment->isRequired()
+        )->change();
+
+        $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
+            !$assignment->isRequired()
+        )->change();
 
         if ($assignment->isUnique() && $assignment->isTranslatable()) {
             $table->unique(
