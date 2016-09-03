@@ -23,18 +23,16 @@ class PolymorphicFieldTypeSchema extends FieldTypeSchema
      */
     public function addColumn(Blueprint $table, AssignmentInterface $assignment)
     {
-        // Skip if the column already exists.
-        if ($this->schema->hasColumn($table->getTable(), $this->fieldType->getColumnName() . '_id')) {
-            return;
+        if (!$this->schema->hasColumn($table->getTable(), $this->fieldType->getColumnName() . '_id')) {
+            $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
+                !$assignment->isRequired()
+            );
         }
-
-        $table->string($this->fieldType->getColumnName() . '_type')->nullable(
-            !$assignment->isRequired()
-        );
-
-        $table->integer($this->fieldType->getColumnName() . '_id')->nullable(
-            !$assignment->isRequired()
-        );
+        if (!$this->schema->hasColumn($table->getTable(), $this->fieldType->getColumnName() . '_type')) {
+            $table->string($this->fieldType->getColumnName() . '_type')->nullable(
+                !$assignment->isRequired()
+            );
+        }
 
         if ($assignment->isUnique() && $assignment->isTranslatable()) {
             $table->unique(
