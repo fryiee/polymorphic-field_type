@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * Class PolymorphicFieldType
  *
- * @link          http://anomaly.is/streams-platform
- * @author        AnomalyLabs, Inc. <hello@anomaly.is>
- * @author        Ryan Thompson <ryan@anomaly.is>
+ * @link   http://pyrocms.com
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
  */
 class PolymorphicFieldType extends FieldType
 {
@@ -28,5 +28,13 @@ class PolymorphicFieldType extends FieldType
     public function getRelation()
     {
         return $this->entry->morphTo($this->getField());
+    }
+
+    /**
+     * Handle saving input.
+     */
+    public function handle()
+    {
+        // We don't do anything yet.
     }
 }

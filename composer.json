@@ -7,18 +7,18 @@
         "streams addon",
         "field type"
     ],
-    "homepage": "http://anomaly.is/",
+    "homepage": "http://pyrocms.com/",
     "license": "MIT",
     "authors": [
         {
             "name": "AnomalyLabs, Inc.",
-            "email": "hello@anomaly.is",
-            "homepage": "http://anomaly.is/",
+            "email": "hello@pyrocms.com",
+            "homepage": "http://pyrocms.com/",
             "role": "Owner"
         }
     ],
     "support": {
-        "email": "support@anomaly.is"
+        "email": "support@pyrocms.com"
     },
     "autoload": {
         "psr-4": {
