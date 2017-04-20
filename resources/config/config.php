@@ -3,9 +3,33 @@
 use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
 
 return [
-    'related' => [
+    'includes' => [
         'required' => true,
-        'type'     => 'anomaly.field_type.select',
+        'type'     => 'anomaly.field_type.checkboxes',
+        'config'   => [
+            'options' => function (\Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface $streams) {
+
+                $options = [];
+
+                /* @var StreamInterface as $stream */
+                foreach ($streams->visible() as $stream) {
+                    $options[ucwords(str_replace('_', ' ', $stream->getNamespace()))][$stream->getEntryModelName(
+                    )] = $stream->getName();
+                }
+
+                foreach ($options as $namespace) {
+                    ksort($namespace);
+                }
+
+                ksort($options);
+
+                return $options;
+            }
+        ]
+    ],
+    'excludes' => [
+        'required' => true,
+        'type'     => 'anomaly.field_type.checkboxes',
         'config'   => [
             'options' => function (\Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface $streams) {
 
